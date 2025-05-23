@@ -13,7 +13,7 @@ Readers are encouraged to verify the information on their own and seek professio
 [Scale or Die at Accelerate 2025: Writing Optimized Solana Programs (Dean Little | Blueshift) - YouTube](https://www.youtube.com/watch?v=Fk_UtbEny0c)
 
 ## Introduction
-- **[`00:08`](https://www.youtube.com/watch?v=Fk_UtbEny0c)** Dean Little introduces himself as a representative of Blueshift
+- **[`00:08`](https://www.youtube.com/watch?v=Fk_UtbEny0c)** **[Dean Little](https://x.com/deanmlittle)** introduces himself as a representative of **[Blueshift](https://blueshift.gg/)**
 - **[`00:12`](https://www.youtube.com/watch?v=Fk_UtbEny0c?t=12)** Announces that his presentation will focus on writing optimized Solana programs
 - **[`00:25`](https://www.youtube.com/watch?v=Fk_UtbEny0c?t=25)** Begins by explaining the general philosophy of program optimization
 
@@ -68,7 +68,7 @@ Readers are encouraged to verify the information on their own and seek professio
 
   - Very inefficient with many heap allocations
   - Recommended alternatives: community libraries or Pinocchio
-  - **Pinocchio** is a good compromise between ease of use and optimization
+  - **[Pinocchio](https://github.com/anza-xyz/pinocchio)** is a good compromise between ease of use and optimization
 
 - **[`03:44`](https://youtu.be/Fk_UtbEny0c?t=224)** **Use zero-copy**:
 
@@ -76,15 +76,15 @@ Readers are encouraged to verify the information on their own and seek professio
   #[repr(C)]
   #[derive(Copy, Clone, bytemuck::Pod, bytemuck::Zeroable)]
   pub struct Token {
-      pub owner: [u8; 32],
-      pub mint: [u8; 32],
+      pub owner:   [u8; 32],
+      pub mint:    [u8; 32],
       pub balance: u64,
   }
 
   let token: &Token = bytemuck::from_bytes(data);
   ```
   - Compatible with Pinocchio, Steel, Anchor
-  - Start with **bitemuck** as a simple solution
+  - Start with **[bytemuck](https://crates.io/crates/bytemuck)** as a simple solution
   - Not recommended for validator software
 
 - **[`04:10`](https://youtu.be/Fk_UtbEny0c?t=250)** **Fixed-size data first**:
@@ -104,9 +104,9 @@ Readers are encouraged to verify the information on their own and seek professio
   }
   ```
 
-  - Reason 1: More efficient deserialization - no need to traverse variable data first
-  - Reason 2: Simplified RPC filtering - known offsets for fields
-  - Example: putting pubkey before string allows easy filtering on public keys
+  - Reason 1: More **efficient deserialization** - no need to traverse variable data first
+  - Reason 2: **Simplified RPC filtering** - known offsets for fields
+  - Example: putting pubkey before string allows **easy filtering** on public keys
 
 - **[`05:00`](https://youtu.be/Fk_UtbEny0c?t=300)** **Avoid dynamically sized data**:
   - For rarely accessed accounts, it's better to pay a bit more rent
@@ -179,8 +179,8 @@ Readers are encouraged to verify the information on their own and seek professio
   assert_eq!(&pda, vault.key().as_ref());
   ```
 
-  - For already created PDAs, use direct SHA-256 instead of create_program_address
-  - create_program_address does SHA-256 + off-curve verification (unnecessary if already verified)
+  - For already created PDAs, use direct SHA-256 instead of `create_program_address`
+  - `create_program_address` does SHA-256 + off-curve verification (unnecessary if already verified)
   - 100 CUs for standard SHA-256 vs 120 CUs with Solana program
 
 - **[`07:41`](https://youtu.be/Fk_UtbEny0c?t=461)** **Avoid superfluous checks**:
@@ -193,7 +193,7 @@ Readers are encouraged to verify the information on their own and seek professio
   ```
 
   - Example: unnecessary to check if a token account has enough tokens before transferring
-  - The token program will already fail if the balance is insufficient
+  - **The token program will already fail if the balance is insufficient**
 
 ## Practical Optimization Example
 
@@ -220,7 +220,7 @@ Readers are encouraged to verify the information on their own and seek professio
   ```
 
   - Simple program that takes a string and displays it
-  - Uses instruction_discriminator = 0 to save 1 CU
+  - Uses `#[instruction(discriminator = [0])]` to save **1 CU**
   - Initial consumption: **649 CU**
 
 - **[`8:28`](https://youtu.be/Fk_UtbEny0c?t=508)** **First optimization: disable logs**:
@@ -359,7 +359,7 @@ Readers are encouraged to verify the information on their own and seek professio
   }
   ```
 
-  - Using lazy_entry_point
+  - Using `lazy_program_entrypoint`
   - Result: **108 CU**
 
 ## Assembly Programming (sBPF assembly)
@@ -394,9 +394,9 @@ Readers are encouraged to verify the information on their own and seek professio
     ```
 
 - **[`10:49`](https://youtu.be/Fk_UtbEny0c?t=649)** **Assembly optimization techniques**:
-  - Using R0 register to verify account count (saves a jump)
-  - R1 contains serialized data
-  - R2 used as length register for sol_log system call
+  - Using `r0` register to verify account count (saves a jump)
+  - `r1` contains serialized data
+  - `r2` used as length register for `sol_log_` system call
     ```rust
     .equ NUM_ACCOUNTS, 0x0000
     .equ INSTRUCTION_DATA_LEN, 0X0008
@@ -459,6 +459,8 @@ Readers are encouraged to verify the information on their own and seek professio
 - [Anchor framework](https://www.anchor-lang.com)
 - [GitHub - regolith-labs/steel: Solana smart contract framework.](https://github.com/regolith-labs/steel)
 - [GitHub - anza-xyz/pinocchio: Create Solana programs with no dependencies attached](https://github.com/anza-xyz/pinocchio)
+- [bytemuck - crates.io: Rust Package Registry](https://crates.io/crates/bytemuck)
+- [bytemuck - Rust](https://docs.rs/bytemuck/latest/bytemuck/)
 
 ----
 
