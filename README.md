@@ -456,9 +456,15 @@ Readers are encouraged to verify the information on their own and seek professio
 - [Blueshift - Make the Shift. Build on Solana.](https://blueshift.gg/)
 - [Create Next App](https://sbpf.xyz/)
 - [Dean 利迪恩 (⚛️,🐱) | sbpf/acc](https://x.com/deanmlittle)
+
+**Frameworks**
 - [Anchor framework](https://www.anchor-lang.com)
 - [GitHub - regolith-labs/steel: Solana smart contract framework.](https://github.com/regolith-labs/steel)
 - [GitHub - anza-xyz/pinocchio: Create Solana programs with no dependencies attached](https://github.com/anza-xyz/pinocchio)
+
+**Zero-copy**
+- [The Magic of zerocopy](https://swatinem.de/blog/magic-zerocopy/)
+- [Not a Yoking Matter (Zero-Copy #1) - In Pursuit of Laziness](https://manishearth.github.io/blog/2022/08/03/zero-copy-1-not-a-yoking-matter/)
 - [bytemuck - crates.io: Rust Package Registry](https://crates.io/crates/bytemuck)
 - [bytemuck - Rust](https://docs.rs/bytemuck/latest/bytemuck/)
 
